@@ -1,0 +1,55 @@
+{
+  "pack": "trade-finance",
+  "description": "Documentary credit presentation: commercial invoice, packing list, bill of lading and letter of credit. SYNTHETIC sample only.",
+  "doc_types": {
+    "commercial_invoice": {
+      "description": "Seller's invoice for the goods shipped under the letter of credit",
+      "fields": [
+        {"name": "invoice_number", "type": "string", "required": true, "description": "Invoice number"},
+        {"name": "invoice_date", "type": "date", "required": true, "description": "Invoice date"},
+        {"name": "seller", "type": "string", "required": true, "description": "Seller / beneficiary name"},
+        {"name": "buyer", "type": "string", "required": true, "description": "Buyer / applicant name"},
+        {"name": "lc_number", "type": "string", "required": false, "description": "Letter of credit number referenced on the invoice"},
+        {"name": "currency", "type": "string", "required": true, "description": "Invoice currency code, e.g. USD"},
+        {"name": "total_amount", "type": "money", "required": true, "description": "Invoice total amount"},
+        {"name": "goods_description", "type": "string", "required": true, "description": "Description of goods"}
+      ]
+    },
+    "packing_list": {
+      "description": "Shipper's list of packages, weights and marks",
+      "fields": [
+        {"name": "invoice_number", "type": "string", "required": false, "description": "Invoice number referenced on the packing list"},
+        {"name": "packages", "type": "string", "required": true, "description": "Number and kind of packages"},
+        {"name": "gross_weight_kg", "type": "number", "required": true, "description": "Gross weight in kg"},
+        {"name": "net_weight_kg", "type": "number", "required": false, "description": "Net weight in kg"}
+      ]
+    },
+    "bill_of_lading": {
+      "description": "Ocean bill of lading issued by the carrier (may span several pages)",
+      "fields": [
+        {"name": "bl_number", "type": "string", "required": true, "description": "Bill of lading number"},
+        {"name": "shipper", "type": "string", "required": true, "description": "Shipper"},
+        {"name": "consignee", "type": "string", "required": true, "description": "Consignee"},
+        {"name": "port_of_loading", "type": "string", "required": true, "description": "Port of loading"},
+        {"name": "port_of_discharge", "type": "string", "required": true, "description": "Port of discharge"},
+        {"name": "gross_weight_kg", "type": "number", "required": false, "description": "Gross weight in kg"},
+        {"name": "shipped_on_board_date", "type": "date", "required": true, "description": "Shipped on board date"}
+      ]
+    },
+    "letter_of_credit": {
+      "description": "Documentary letter of credit terms",
+      "fields": [
+        {"name": "lc_number", "type": "string", "required": true, "description": "Letter of credit number"},
+        {"name": "applicant", "type": "string", "required": true, "description": "Applicant (buyer)"},
+        {"name": "beneficiary", "type": "string", "required": true, "description": "Beneficiary (seller)"},
+        {"name": "currency", "type": "string", "required": true, "description": "Credit currency code"},
+        {"name": "amount", "type": "money", "required": true, "description": "Credit amount"},
+        {"name": "tolerance_pct", "type": "number", "required": false, "description": "Amount tolerance in percent (e.g. 5 for +/- 5%)"},
+        {"name": "latest_shipment_date", "type": "date", "required": true, "description": "Latest shipment date"},
+        {"name": "expiry_date", "type": "date", "required": true, "description": "Expiry date"},
+        {"name": "port_of_loading", "type": "string", "required": false, "description": "Port of loading"},
+        {"name": "port_of_discharge", "type": "string", "required": false, "description": "Port of discharge"}
+      ]
+    }
+  }
+}

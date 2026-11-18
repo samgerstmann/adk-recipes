@@ -1,0 +1,41 @@
+# Within-package consistency checks for the small-business-loan pack.
+# Advisory intake checks only - they do not approve or decline credit.
+# (The bundled sample PDFs carry no dates, so no date rules are used here;
+#  see trade-finance/rules.yaml for date_before examples.)
+rules:
+  - id: required_fields
+    type: required
+    severity: high
+
+  - id: requested_amount_positive
+    type: compare
+    left: loan_application.loan_amount_requested
+    op: ">"
+    right: 0
+    severity: high
+    message: Requested loan amount must be greater than zero
+
+  - id: amount_within_revenue_ratio
+    type: compare
+    left: loan_application.loan_amount_requested
+    op: "<="
+    right: loan_application.annual_revenue
+    factor: 0.75            # right side multiplied by factor
+    severity: medium
+    message: Requested amount exceeds 75% of annual revenue
+
+  - id: term_in_range
+    type: compare
+    left: loan_application.loan_term_months
+    op: "<="
+    right: 120
+    severity: low
+    message: Requested term is longer than 120 months
+
+  - id: operating_history
+    type: compare
+    left: loan_application.years_in_business
+    op: ">="
+    right: 1
+    severity: medium
+    message: Business has less than one year of operating history

@@ -1,0 +1,27 @@
+{
+  "pack": "small-business-loan",
+  "description": "Small business loan application intake (sample PDFs from contrib/python/small-business-loan-agent by Nora Filali). Advisory intake only: no credit decision.",
+  "doc_types": {
+    "loan_application": {
+      "description": "Small Business Loan Application Summary (business, owner, financials, loan request)",
+      "fields": [
+        {"name": "business_name", "type": "string", "required": true, "description": "Legal name of the business"},
+        {"name": "business_type", "type": "string", "required": false, "description": "Legal structure, e.g. LLC"},
+        {"name": "ein", "type": "string", "required": true, "description": "Employer Identification Number"},
+        {"name": "industry", "type": "string", "required": false, "description": "Industry or sector"},
+        {"name": "years_in_business", "type": "number", "required": true, "description": "Years the business has operated"},
+        {"name": "number_of_employees", "type": "number", "required": false, "description": "Number of employees"},
+        {"name": "owner_name", "type": "string", "required": true, "description": "Full name of the owner / primary applicant"},
+        {"name": "owner_email", "type": "string", "required": false, "description": "Owner email"},
+        {"name": "business_address", "type": "string", "required": false, "description": "Street, city, state and ZIP on one line"},
+        {"name": "annual_revenue", "type": "money", "required": true, "description": "Annual revenue"},
+        {"name": "net_profit", "type": "money", "required": false, "description": "Annual net profit"},
+        {"name": "existing_debt", "type": "string", "required": false, "description": "Existing business debt (amount or 'None')"},
+        {"name": "loan_amount_requested", "type": "money", "required": true, "description": "Loan amount requested; empty if blank"},
+        {"name": "loan_purpose", "type": "string", "required": true, "description": "Purpose of the loan"},
+        {"name": "loan_term_months", "type": "number", "required": true, "description": "Requested term in months"},
+        {"name": "collateral_offered", "type": "string", "required": false, "description": "Collateral offered"}
+      ]
+    }
+  }
+}
