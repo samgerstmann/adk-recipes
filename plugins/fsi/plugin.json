@@ -1,0 +1,25 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "fsi",
+  "version": "0.1.0",
+  "description": "Financial services AI plugin: small business loan processing with multi-agent underwriting, enforced human approval and repair & resume on Google Cloud.",
+  "license": "Apache-2.0",
+  "keywords": [
+    "financial-services",
+    "lending",
+    "loan-origination",
+    "multi-agent",
+    "human-in-the-loop"
+  ],
+  "author": {
+    "name": "Nora Filali, Neil Desai (original sample); skill adaptation: Sam Gerstmann"
+  },
+  "ownership": {
+    "team": "AI FDE Financial Services",
+    "poc": "norarfilali",
+    "contributors": [
+      "nmdesai",
+      "samgerstmann"
+    ]
+  }
+}

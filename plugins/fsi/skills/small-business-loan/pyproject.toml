@@ -1,0 +1,39 @@
+[project]
+name = "fsi-small-business-loan"
+version = "0.1.0"
+description = "Small business loan processing agent skill: 4 sub-agents, enforced human approval, repair & resume. Adapted from contrib/python/small-business-loan-agent."
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+
+dependencies = [
+    "google-adk>=2.2.0",  # agent runtime for `adk web` / `adk run`
+    "google-genai>=1.0",  # LLM-as-judge call
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",  # setup.py reads the design-spec frontmatter
+]
+
+[project.optional-dependencies]
+# Full setup only: Firestore state backend and gs:// application sources.
+gcp = [
+    "google-cloud-firestore>=2.21.0",
+    "google-cloud-storage>=2.18.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[[tool.uv.index]]
+url = "https://pypi.org/simple/"
+default = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["scripts"]
+
+[dependency-groups]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.24"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
