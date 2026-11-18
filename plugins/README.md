@@ -21,7 +21,7 @@ that deploy directly to **Vertex AI Agent Engine**, **Gemini Enterprise**,
 | Plugin | Included Skills | Companion Deployable Agents (`contrib/`) |
 |---|---|---|
 | [`retail/`](./retail/) | [`retail-product-search`](./retail/skills/product-search/) (Vector Search + BigQuery semantic catalog RAG)<br>[`retail-virtual-tryon`](./retail/skills/virtual-tryon/) (Gemini image + Veo catwalk video virtual try-on) | [`contrib/python/retail-product-search`](../contrib/python/retail-product-search/)<br>[`contrib/python/retail-virtual-tryon`](../contrib/python/retail-virtual-tryon/) |
-| [`fsi/`](./fsi/) | [`fsi-small-business-loan`](./fsi/skills/small-business-loan/) (multi-agent loan processing with enforced human approval and repair & resume) | [`contrib/python/small-business-loan-agent`](../contrib/python/small-business-loan-agent/) |
+| [`fsi/`](./fsi/) | [`fsi-doc-intake`](./fsi/skills/doc-intake/) (split document packages, extract source-linked fields with confidence, consistency checks, human review & approval; small-business-loan and trade-finance packs) | [`contrib/python/small-business-loan-agent`](../contrib/python/small-business-loan-agent/) (full downstream loan workflow) |
 
 ## Installing a Skill
 

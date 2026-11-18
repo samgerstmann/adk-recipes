@@ -1,0 +1,72 @@
+# Within-package consistency checks for the trade-finance pack.
+# Field references are <doc_type>.<field>. Checks are advisory: they flag
+# discrepancies for a human checker, they do not decide compliance.
+# Rule types: required | compare (op: == != < <= > >=, tolerance_pct, factor)
+#             | date_before (inclusive: true/false) | equals (normalized text)
+rules:
+  - id: required_fields
+    type: required          # every field marked "required" in schema.json
+    severity: high
+
+  - id: invoice_within_lc_amount
+    type: compare
+    left: commercial_invoice.total_amount
+    op: "<="
+    right: letter_of_credit.amount
+    tolerance_pct_from: letter_of_credit.tolerance_pct   # falls back to tolerance_pct
+    tolerance_pct: 0
+    severity: high
+    message: Invoice total exceeds the credit amount plus tolerance
+
+  - id: shipment_by_latest_date
+    type: date_before
+    left: bill_of_lading.shipped_on_board_date
+    right: letter_of_credit.latest_shipment_date
+    inclusive: true
+    severity: high
+    message: Shipped on board after the latest shipment date
+
+  - id: shipment_before_expiry
+    type: date_before
+    left: bill_of_lading.shipped_on_board_date
+    right: letter_of_credit.expiry_date
+    inclusive: true
+    severity: medium
+    message: Shipped on board after the credit expiry date
+
+  - id: currency_matches
+    type: equals
+    left: commercial_invoice.currency
+    right: letter_of_credit.currency
+    severity: high
+    message: Invoice currency differs from credit currency
+
+  - id: lc_number_matches
+    type: equals
+    left: commercial_invoice.lc_number
+    right: letter_of_credit.lc_number
+    severity: medium
+    message: Invoice references a different credit number
+
+  - id: invoice_number_on_packing_list
+    type: equals
+    left: packing_list.invoice_number
+    right: commercial_invoice.invoice_number
+    severity: low
+    message: Packing list references a different invoice
+
+  - id: gross_weight_consistent
+    type: compare
+    left: packing_list.gross_weight_kg
+    op: "=="
+    right: bill_of_lading.gross_weight_kg
+    tolerance_pct: 1
+    severity: medium
+    message: Gross weight differs between packing list and bill of lading
+
+  - id: port_of_loading_matches
+    type: equals
+    left: bill_of_lading.port_of_loading
+    right: letter_of_credit.port_of_loading
+    severity: medium
+    message: Port of loading differs from the credit

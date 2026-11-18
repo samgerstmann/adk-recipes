@@ -5,26 +5,28 @@ services workflows for AI coding assistants (Gemini CLI, Claude Code,
 Antigravity, Codex), following the Agent Plugins v1.0.0 layout
 (`plugin.json` + `skills/<skill-name>/SKILL.md`):
 
-1. **[`fsi-small-business-loan`](./skills/small-business-loan/)** — a small
-   business loan processing agent: an ADK orchestrator with document
-   extraction, underwriting, pricing and loan decision sub-agents, an
-   **enforced human approval** gate, an LLM-as-judge quality gate, and
-   **repair & resume** for incomplete applications. Quick start runs with
-   in-memory state and bundled synthetic PDFs (Gemini on Vertex AI only); Full
-   setup adds Firestore state, `gs://` applications and custom eligibility
-   rules.
+1. **[`fsi-doc-intake`](./skills/doc-intake/)** — an advisory document intake
+   agent: splits a document package, extracts source-linked fields (value,
+   page, verbatim quote, confidence) with Gemini, routes uncertain fields to a
+   human reviewer, runs within-package consistency checks from a domain pack,
+   and writes a human-approved structured record with an audit trail. Ships
+   `small-business-loan` and `trade-finance` packs; new domains are a folder
+   of `schema.json` + `rules.yaml`, no code. It does not make credit, loan or
+   payment decisions.
 
-**Credits:** adapted from
-[`contrib/python/small-business-loan-agent`](../../contrib/python/small-business-loan-agent/)
-by the **AI FDE Financial Services** team — Nora Filali (POC, `norarfilali`),
-contributor Neil Desai (`nmdesai`). · **License:** Apache-2.0
+**Credits:** Nora Filali (POC, `norarfilali`) and Neil Desai (`nmdesai`), AI
+FDE Financial Services — sample PDFs and the loan workflow in
+[`contrib/python/small-business-loan-agent`](../../contrib/python/small-business-loan-agent/),
+whose document-extraction stage this skill generalizes; Bradley Ramos — the
+FDE trade-document extraction pattern followed by the trade-finance pack.
+**License:** Apache-2.0.
 
-## Skills vs. the deployable sample
+## Skill vs. the deployable loan sample
 
-| Surface | Location | Persona |
+| Surface | Location | What it covers |
 |---|---|---|
-| **Agent Plugin Skill** (this folder) | [`skills/small-business-loan`](./skills/small-business-loan/) | Developers using a coding assistant: Q-MODE interview → `design-spec.md` → `setup.py` → `adk web` in their own workspace |
-| **Standalone sample** | [`contrib/python/small-business-loan-agent`](../../contrib/python/small-business-loan-agent/) | Platform engineers deploying with Agent Starter Pack / Agent Engine and Firestore |
+| **Agent Plugin Skill** (this folder) | [`skills/doc-intake`](./skills/doc-intake/) | Q-MODE interview → `design-spec.md` → `setup.py` → `adk web`: intake of any pack's document packages into a reviewed record |
+| **Standalone sample** | [`contrib/python/small-business-loan-agent`](../../contrib/python/small-business-loan-agent/) | Full downstream loan workflow (extraction → underwriting → pricing → approval → decision) on Agent Engine + Firestore |
 
 ## Prerequisites
 
@@ -38,15 +40,15 @@ contributor Neil Desai (`nmdesai`). · **License:** Apache-2.0
 ## Installation
 
 ```bash
-npx skills add google/adk-recipes/plugins/fsi --skill fsi-small-business-loan
+npx skills add google/adk-recipes/plugins/fsi --skill fsi-doc-intake
 ```
 
-Or from a clone: `make -C plugins/fsi/skills/small-business-loan install-skill-local`.
+Or from a clone: `make -C plugins/fsi/skills/doc-intake install-skill-local`.
 
 ## Run
 
-Open your coding assistant in an empty workspace and ask it to "build a small
-business loan agent"; it runs the Q-MODE setup interview and starts the agent
-with `adk web`. A 3-minute demo script is in
-[`skills/small-business-loan/DEMO.md`](./skills/small-business-loan/DEMO.md).
-All sample documents are synthetic.
+Open your coding assistant in an empty workspace and ask it to "build a
+document intake agent"; it runs the Q-MODE setup interview and starts the
+agent with `adk web`. A 3-minute demo script for both packs is in
+[`skills/doc-intake/DEMO.md`](./skills/doc-intake/DEMO.md). All sample
+documents are synthetic or fictional.

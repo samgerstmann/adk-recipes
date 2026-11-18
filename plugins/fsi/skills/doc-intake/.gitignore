@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+/design-spec.md
+.doc_intake_state.json
+records/
+.adk/
